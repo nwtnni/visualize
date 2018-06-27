@@ -94,6 +94,29 @@ export class Heap {
         return popped;
     }
 
+    update(element) {
+
+        // Position of current slot
+        var current = this.heap.indexOf(element);
+
+        // Partially applied comparator
+        var compare = other => this.compare(element, other);
+
+        // Element at index divided by two
+        var halve = index => this.heap[Math.trunc(index / 2)];
+
+        // Bubble up
+        while (current > 1 && compare(halve(current)) < 0) {
+            next = Math.trunc(pos / 2);
+            this.heap[current] = this.heap[next];
+            current = next;
+        }
+
+        // Place element
+        this.heap[current] = element;
+
+    }
+
     empty() {
         return this.heap.length == 1;
     }

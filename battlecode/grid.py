@@ -19,7 +19,7 @@ class Tile(Enum):
         if self is Tile.FLOOR:
             return (0, 0, 0, 0)
         elif self is Tile.WALL:
-            return (1, 1, 1, 1)
+            return (0, 0, 0, 0)
         else:
             return (0, 1, 0, 0.5)
 

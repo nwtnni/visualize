@@ -13,7 +13,7 @@ def make_patches(assign_color, height, width):
 
     for i in range(height):
         for j in range(width):
-            patches.append(mp.Rectangle((j, i), 1, 1))
+            patches.append(mp.Rectangle((j, height - i - 1), 1, 1))
             colors.append(assign_color(i, j))
 
     return mc.PatchCollection(patches, facecolors=colors)
@@ -29,11 +29,16 @@ def make_grid(grid):
 
 def make_heat_map(grid, start, end):
     distance = djikstra(grid, start, end)
-    normalize = max(distance.values()) * 1.5
+    scale = max(distance.values()) * 1.5
+
+    def normalize(d):
+        return d / scale + 0.10
 
     def assign_color(i, j):
-        if distance[(i, j)] < float("inf"):
-            return (1, 0, 0, distance[(i, j)] / normalize)
+        if (i, j) in distance and distance[(i, j)] < float("inf"):
+            return (1, 0, 0, normalize(distance[(i, j)]))
+        elif grid[i][j] is Tile.FLOOR:
+            return (0, 0, 1, 0.10)
         else:
             return (0, 0, 0, 0)
 

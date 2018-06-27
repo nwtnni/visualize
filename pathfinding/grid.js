@@ -1,10 +1,3 @@
-export class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 export class Grid {
     constructor(width, height, initial) {
         this.width = width;
@@ -13,7 +6,7 @@ export class Grid {
     }
 
     index(p) {
-        return p.y * this.width + p.x;
+        return p[1] * this.width + p[0];
     }
 
     get(p) {
@@ -24,11 +17,11 @@ export class Grid {
         this.data[this.index(p)] = update;
     }
 
-    reachable(p, passable) {
+    reachable(p, filter) {
         return [(-1, -1), (0, -1), (0, 1), (-1,  0), (1, 0), (-1,  1), (0,  1), (1, 1)]
-            .map(d => new Point(p.x + d[0], p.y + d[1]))
-            .filter(p => p.x >= 0 && p.x < this.width)
-            .filter(p => p.y >= 0 && p.y < this.height)
-            .filter(passable);
+            .map(d => (p[0] + d[0], p[1] + d[1]))
+            .filter(p => p[0] >= 0 && p[0] < this.width)
+            .filter(p => p[1] >= 0 && p[1] < this.height)
+            .filter(filter);
     }
 }

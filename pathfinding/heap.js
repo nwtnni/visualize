@@ -22,7 +22,7 @@ export class Heap {
 
         // Bubble up
         while (current > 1 && compare(halve(current)) < 0) {
-            next = Math.trunc(pos / 2);
+            var next = Math.trunc(current / 2);
             this.heap[current] = this.heap[next];
             current = next;
         }
@@ -59,13 +59,13 @@ export class Heap {
             var er = this.heap[r];
 
             // No children left
-            if (l == undefined) {
+            if (el == undefined) {
                 break;
             }
 
             // Only one child
-            else if (r == undefined) {
-                if (compare(l) > 0) {
+            else if (er == undefined) {
+                if (compare(el) > 0) {
                     this.heap[current] = el;
                     current = l;
                 }
@@ -107,7 +107,7 @@ export class Heap {
 
         // Bubble up
         while (current > 1 && compare(halve(current)) < 0) {
-            next = Math.trunc(pos / 2);
+            var next = Math.trunc(current / 2);
             this.heap[current] = this.heap[next];
             current = next;
         }

@@ -2,19 +2,15 @@ export class Grid {
     constructor(width, height, initial) {
         this.width = width;
         this.height = height;
-        this.data = new Array(width * height).fill(initial);
-    }
-
-    index(p) {
-        return p[1] * this.width + p[0];
+        this.data = new Array(height).fill(new Array(width).fill(initial));
     }
 
     get(p) {
-        return this.data[this.index(p)];
+        return this.data[p[1]][p[0]];
     }
     
     set(p, update) {
-        this.data[this.index(p)] = update;
+        this.data[p[1]][p[0]] = update;
     }
 
     reachable(p, filter) {

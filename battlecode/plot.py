@@ -27,9 +27,8 @@ def make_grid(grid):
     return make_patches(assign_color, height, width)
 
 
-def make_heat_map(grid, start, end):
-    distance = djikstra(grid, start, end)
-    scale = max(distance.values()) * 1.5
+def make_heat_map(grid, distance):
+    scale = max(distance.values()) * 1.5 + 0.001
 
     def normalize(d):
         return d / scale + 0.10
@@ -60,17 +59,3 @@ def plot(lines, save=False, path="maze"):
     else:
         plt.show()
     plt.close()
-
-
-def main(infile):
-    grid = from_file(infile)
-    height = len(grid)
-    width = len(grid[0])
-    plot([
-        make_grid(grid),
-        make_heat_map(grid, (0, 0), (height - 1, width - 1))
-    ])
-
-
-if __name__ == '__main__':
-    main(argv[1])

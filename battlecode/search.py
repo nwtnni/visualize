@@ -25,28 +25,57 @@ def reachable(grid, p):
     return filter(in_bounds, possible)
 
 
+def reverse_djikstra(grid, end):
+    distance = defaultdict(lambda: float("inf"))
+    distance[end] = 0
+    frontier = PriorityQueue()
+    frontier.put_nowait((0, end))
+    visited = set([])
+
+    while not frontier.empty():
+        (d, p) = frontier.get_nowait()
+
+        if p in visited:
+            continue
+        else:
+            visited.add(p)
+
+        for n in reachable(grid, p):
+            if distance[n] > d + 1:
+                distance[n] = d + 1
+            frontier.put_nowait((distance[n], n))
+    return {p: distance[p] for p in visited}
+
+
 def djikstra(grid, start, end):
     distance = defaultdict(lambda: float("inf"))
     distance[start] = 0
     frontier = PriorityQueue()
     frontier.put_nowait((0, start))
     visited = set([])
+    retrace = {}
 
     while not frontier.empty():
         (d, p) = frontier.get_nowait()
+        if p in visited:
+            continue
+
+        visited.add(p)
 
         if p == end:
-            visited.add(p)
             break
-        elif p in visited:
-            continue
-        else:
-            visited.add(p)
 
         for n in reachable(grid, p):
-            print(n)
             if distance[n] > d + 1:
                 distance[n] = d + 1
+                retrace[n] = p
             frontier.put_nowait((distance[n], n))
 
-    return {p: distance[p] for p in visited}
+    # Backtrack
+    current = end
+    forward = {}
+    while current != start:
+        forward[retrace[current]] = current
+        current = retrace[current]
+
+    return ({p: distance[p] for p in visited}, forward)

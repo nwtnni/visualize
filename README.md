@@ -1,1 +1,3 @@
-# visualization
+# visualize
+
+Experiments in algorithm visualization.

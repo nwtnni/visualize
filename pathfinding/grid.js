@@ -8,7 +8,7 @@ export class Grid {
     get(p) {
         return this.data[p[1]][p[0]];
     }
-    
+
     set(p, update) {
         this.data[p[1]][p[0]] = update;
     }
@@ -19,5 +19,29 @@ export class Grid {
             .filter(p => p[0] >= 0 && p[0] < this.width)
             .filter(p => p[1] >= 0 && p[1] < this.height)
             .filter(filter);
+    }
+}
+
+// Temporary: to be extended later
+export class Tile {
+
+    constructor(type) {
+        this.type = type;
+    }
+
+    static floor() {
+        return new Tile(0);
+    }
+
+    static wall() {
+        return new Tile(1);
+    }
+
+    floor() {
+        return this.type === 0;
+    }
+
+    wall() {
+        return this.type === 1;
     }
 }

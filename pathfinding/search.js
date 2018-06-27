@@ -1,4 +1,3 @@
-import { Grid } from './grid.js';
 import { Heap } from './heap.js';
 
 export function djikstra(grid, start, end, passable) {

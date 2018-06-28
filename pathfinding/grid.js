@@ -2,7 +2,11 @@ export class Grid {
     constructor(width, height, initial) {
         this.width = width;
         this.height = height;
-        this.data = new Array(height).fill(new Array(width).fill(initial));
+        this.data = new Array(height);
+
+        for (var i = 0; i < height; i++) {
+            this.data[i] = new Array(width);
+        }
     }
 
     get(p) {
@@ -14,27 +18,33 @@ export class Grid {
     }
 
     reachable(p, filter) {
-        return [(-1, -1), (0, -1), (0, 1), (-1,  0), (1, 0), (-1,  1), (0,  1), (1, 1)]
+        return [[-1, -1], [0, -1], [0, 1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
             .map(d => (p[0] + d[0], p[1] + d[1]))
             .filter(p => p[0] >= 0 && p[0] < this.width)
             .filter(p => p[1] >= 0 && p[1] < this.height)
             .filter(filter);
+    }
+
+    raw() {
+        return [].concat(...this.data);
     }
 }
 
 // Temporary: to be extended later
 export class Tile {
 
-    constructor(type) {
+    constructor(type, x, y) {
         this.type = type;
+        this.x = x;
+        this.y = y;
     }
 
-    static floor() {
-        return new Tile(0);
+    static floor(x, y) {
+        return new Tile(0, x, y);
     }
 
-    static wall() {
-        return new Tile(1);
+    static wall(x, y) {
+        return new Tile(1, x, y);
     }
 
     floor() {

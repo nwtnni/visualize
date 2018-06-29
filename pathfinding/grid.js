@@ -10,11 +10,21 @@ export class Grid {
     }
 
     get(p) {
-        return this.data[p[1]][p[0]];
+        const [x, y] = p;
+        return this.data[y][x];
     }
 
-    set(p, update) {
-        this.data[p[1]][p[0]] = update;
+    set(p, data) {
+        const [x, y] = p;
+        this.data[y][x] = data;
+    }
+
+    forEach(f) {
+        for (var i = 0; i < this.height; i++) {
+            for (var j = 0; j < this.width; j++) {
+                f(this.data[i][j]);
+            }
+        }
     }
 
     reachable(p, filter) {
@@ -24,34 +34,12 @@ export class Grid {
             .filter(p => p[1] >= 0 && p[1] < this.height)
             .filter(filter);
     }
-
-    raw() {
-        return [].concat(...this.data);
-    }
 }
 
-// Temporary: to be extended later
 export class Tile {
-
-    constructor(type, x, y) {
-        this.type = type;
+    constructor(x, y, passable) {
         this.x = x;
         this.y = y;
-    }
-
-    static floor(x, y) {
-        return new Tile(0, x, y);
-    }
-
-    static wall(x, y) {
-        return new Tile(1, x, y);
-    }
-
-    floor() {
-        return this.type === 0;
-    }
-
-    wall() {
-        return this.type === 1;
+        this.passable = passable;
     }
 }

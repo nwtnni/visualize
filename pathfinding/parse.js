@@ -1,6 +1,6 @@
 import { Grid, Tile } from './grid.js';
 
-function parse(data) {
+export function parse(data, construct) {
     const width = data[0].length;
     const height = data.length;
     let grid = new Grid(width, height, 0);
@@ -8,21 +8,21 @@ function parse(data) {
 
     for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
-            if (data[y].charAt(x) === 'x') {
-                grid.set([x, y], Tile.wall(x, y));
-            } else {
-                grid.set([x, y], Tile.floor(x, y));
-            }
+            grid.set([x, y], construct(x, y, data[y].charAt(x)));
         }
     }
 
     return grid;
 }
 
-export var TINY = parse([
+function parseDefault(data) {
+    return parse(data, (x, y, c) => new Tile(x, y, c === '_'));
+}
+
+export var TINY = parseDefault([
     '_____',
-    '_____',
-    '_____',
-    '_____',
+    '__#__',
+    '__#__',
+    '__#__',
     '_____',
 ]);

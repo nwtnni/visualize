@@ -1,14 +1,26 @@
+import { Tile } from './grid.js';
 import { Heap } from './heap.js';
+import { parse } from './parse.js';
+
+export class DjikstraTile extends Tile {
+    get d() {
+        return this.d;
+    }
+
+    set d(d) {
+        this.d = d;
+    }
+}
 
 export function djikstra(grid, start, end, passable) {
+
+    grid.forEach(tile => tile.d = Infinity);
     var visited = new Set([]);
-    var distance = new Map([[start, 0]]);
     var retrace = new Map([]);
-    var frontier = new Heap(point => distance[point]); 
+    var frontier = new Heap(p => p.d); 
    
     while (!frontier.empty()) {
         p = frontier.pop();  
-        d = distance[p];    
         visited.add(p);
 
         // Found the goal
@@ -17,12 +29,12 @@ export function djikstra(grid, start, end, passable) {
         }
 
         for (var n in grid.reachable(p, passable)) {
-            var closer = distance.has(n) && distance.get(n) > d + 1;
-            var unseen = !distance.has(n);
+            var closer = n.d > p.d + 1;
+            var unseen = n.d === Infinity;
 
             if (closer || unseen) {
                 retrace.set(n, p);
-                distance.set(n, d + 1);
+                n.d = p.d + 1;
                 let _ = closer ? frontier.update(n) : frontier.push(n);
             }
         }
@@ -36,5 +48,5 @@ export function djikstra(grid, start, end, passable) {
         current = next;
     }
 
-    return (distance, trace);
+    return trace.get(start);
 }

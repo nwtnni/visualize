@@ -1,21 +1,16 @@
-class Grid {
-    constructor(width, height, initial) {
+export default class Grid {
+
+    constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.data = new Array(height);
-
-        for (var i = 0; i < height; i++) {
-            this.data[i] = new Array(width);
-        }
+        this.data = new Array(height).fill(undefined);
     }
 
-    get(p) {
-        const [x, y] = p;
+    get(x, y) {
         return this.data[y][x];
     }
 
-    set(p, data) {
-        const [x, y] = p;
+    set(x, y, data) {
         this.data[y][x] = data;
     }
 
@@ -27,19 +22,12 @@ class Grid {
         }
     }
 
-    reachable(p, filter) {
+    adjacent(p, filter) {
         return [[-1, -1], [0, -1], [0, 1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
             .map(d => (p[0] + d[0], p[1] + d[1]))
             .filter(p => p[0] >= 0 && p[0] < this.width)
             .filter(p => p[1] >= 0 && p[1] < this.height)
             .filter(filter);
     }
-}
 
-class Tile {
-    constructor(x, y, passable) {
-        this.x = x;
-        this.y = y;
-        this.passable = passable;
-    }
 }

@@ -17,16 +17,18 @@ export function* bfs(grid, start, end, passable) {
             break;
         }
 
-        for (let n in grid.reachable(p, passable)) {
-            if (!visited.contains(n)) {
-                frontier.unshift(n);
+        let adjacent = grid.adjacent(p, passable);
+
+        for (let i = 0; i < adjacent.length; i++) {
+            if (!visited.contains(adjacent[i])) {
+                frontier.unshift(adjacent[i]);
             }
         }
     }
 
     let current = end;
     let trace = new HashMap();
-    while (current[0] !== start[0] || current[1] !== start[1]) {
+    while (!current.equals(end)) {
         trace.put(current, retrace.get(current));
         current = retrace.get(current);
     }

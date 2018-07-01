@@ -74,7 +74,6 @@ export class HashMap {
             }
         }
 
-        console.log(expanded);
         this.buckets = expanded;
     }
 }

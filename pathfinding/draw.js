@@ -1,7 +1,8 @@
+import { Point } from '../util/point.js';
 import { bfs } from './bfs.js';
 import { TINY } from './parse.js';
 
-const SEARCH = bfs(TINY, [0, 0], [4, 4], tile => tile.passable);
+const SEARCH = bfs(TINY, new Point(0, 0), new Point(4, 4), tile => tile.passable);
 const DATA = TINY.data;
 let visited = new Set([]);
 
@@ -25,7 +26,8 @@ const rows = grid.selectAll(".row")
     .attr("class", "row");
 
 d3.interval(() => {
-    visited = SEARCH.next().value;
+    const next = SEARCH.next().value;
+    visited = next ? next : visited;
     update(DATA, visited);
 }, 1000);
 
@@ -46,7 +48,7 @@ function update(data, visited) {
         .attr("stroke-width", "1px")
     .transition(t)
         .attr("fill", tile => {
-            if (visited.has(tile)) {
+            if (visited.contains(new Point(tile.x, tile.y))) {
                 return d3.rgb(255, 0, 0, 0.5);
             } else {
                 return d3.rgb(0, 0, 0, 0);

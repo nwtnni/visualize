@@ -1,4 +1,4 @@
-import './point.js';
+import { Point } from './point.js';
 
 export class Grid {
 
@@ -29,11 +29,11 @@ export class Grid {
     }
 
     adjacent(p, filter) {
-        return [[-1, -1], [0, -1], [0, 1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
+        return [[-1, -1], [0, -1], [0, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
             .map(d => new Point(p.x + d[0], p.y + d[1]))
             .filter(p => p.x >= 0 && p.x < this.width)
             .filter(p => p.y >= 0 && p.y < this.height)
-            .filter(filter);
+            .filter(p => filter(this.get(p)));
     }
 
 }

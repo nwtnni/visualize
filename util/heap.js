@@ -1,5 +1,5 @@
 // Basic min-heap implementation.
-export default class Heap {
+export class Heap {
 
     constructor(compare) {
         this.compare = compare;

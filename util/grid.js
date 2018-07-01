@@ -1,4 +1,4 @@
-export default class Grid {
+export class Grid {
 
     constructor(width, height) {
         this.width = width;

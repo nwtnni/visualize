@@ -1,4 +1,4 @@
-export default class HashMap {
+export class HashMap {
 
     constructor() {
         this.buckets = [];

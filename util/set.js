@@ -1,6 +1,6 @@
-import HashMap from './map.js';
+import { HashMap } from './map.js';
 
-export default class HashSet {
+export class HashSet {
     constructor() {
         this.map = new HashMap();
     }

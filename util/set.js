@@ -6,7 +6,7 @@ export class HashSet {
     }
 
     contains(key) {
-        this.map.contains(key);        
+        return this.map.contains(key);        
     }
 
     put(key) {

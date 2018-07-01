@@ -7,7 +7,7 @@ export class HashMap {
     }
 
     contains(key) {
-        const index = this._hash(key.hash()); 
+        const index = this._hash(key.hash());
         if (this.buckets[index] === undefined) {
             return false;
         }
@@ -26,6 +26,16 @@ export class HashMap {
             this.buckets[index] = [];
         }
 
+        for (let i = 0; i < this.buckets[index].length; i++) {
+            const [k, v] = this.buckets[index][i];
+
+            if (key.equals(k)) {
+                this.buckets[index][i] = [key, value];
+                return;
+            }
+        }
+
+        this.size += 1;
         this.buckets[index].push([key, value]);
     }
 
@@ -48,17 +58,23 @@ export class HashMap {
         let expanded = new Array(this.capacity).fill(undefined);
 
         for (let i = 0; i < previous; i++) {
-            for (const [key, value] in this.buckets[i]) {
-                const j = this._hash(key.hash());
-                
-                if (expanded[j] === undefined) {
-                    expanded[j] = [];
+            if (this.buckets[i] === undefined) {
+                continue;
+            }
+
+            for (let j = 0; j < this.buckets[i].length; j++) {
+                let [key, value] = this.buckets[i][j];
+                const k = this._hash(key.hash());
+
+                if (expanded[k] === undefined) {
+                    expanded[k] = [];
                 }
 
-                expanded[j].push([key, value]);
+                expanded[k].push([key, value]);
             }
         }
 
+        console.log(expanded);
         this.buckets = expanded;
     }
 }

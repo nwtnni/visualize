@@ -1,17 +1,23 @@
+import './point.js';
+
 export class Grid {
 
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.data = new Array(height).fill(undefined);
+        this.data = new Array(height);
+
+        for (let y = 0; y < height; y++) {
+            this.data[y] = [];
+        }
     }
 
-    get(x, y) {
-        return this.data[y][x];
+    get(p) {
+        return this.data[p.y][p.x];
     }
 
-    set(x, y, data) {
-        this.data[y][x] = data;
+    set(p, data) {
+        this.data[p.y][p.x] = data;
     }
 
     forEach(f) {
@@ -24,9 +30,9 @@ export class Grid {
 
     adjacent(p, filter) {
         return [[-1, -1], [0, -1], [0, 1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
-            .map(d => (p[0] + d[0], p[1] + d[1]))
-            .filter(p => p[0] >= 0 && p[0] < this.width)
-            .filter(p => p[1] >= 0 && p[1] < this.height)
+            .map(d => new Point(p.x + d[0], p.y + d[1]))
+            .filter(p => p.x >= 0 && p.x < this.width)
+            .filter(p => p.y >= 0 && p.y < this.height)
             .filter(filter);
     }
 

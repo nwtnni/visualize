@@ -1,3 +1,6 @@
+import { bfs } from './bfs.js';
+import { TINY } from './parse.js';
+
 const SEARCH = bfs(TINY, [0, 0], [4, 4], tile => tile.passable);
 const DATA = TINY.data;
 let visited = new Set([]);
@@ -25,7 +28,6 @@ d3.interval(() => {
     visited = SEARCH.next().value;
     update(DATA, visited);
 }, 1000);
-
 
 function update(data, visited) {
 

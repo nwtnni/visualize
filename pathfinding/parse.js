@@ -1,6 +1,4 @@
-import { Grid, Tile } from './grid.js';
-
-export function parse(data, construct) {
+function parse(data, construct) {
     const width = data[0].length;
     const height = data.length;
     let grid = new Grid(width, height, 0);
@@ -19,7 +17,7 @@ function parseDefault(data) {
     return parse(data, (x, y, c) => new Tile(x, y, c === '_'));
 }
 
-export var TINY = parseDefault([
+var TINY = parseDefault([
     '_____',
     '__#__',
     '__#__',

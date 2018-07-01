@@ -1,6 +1,3 @@
-import { TINY } from './parse.js';
-import { bfs } from './bfs.js';
-
 const SEARCH = bfs(TINY, [0, 0], [4, 4], tile => tile.passable);
 const DATA = TINY.data;
 let visited = new Set([]);

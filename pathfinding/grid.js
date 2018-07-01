@@ -1,4 +1,4 @@
-export class Grid {
+class Grid {
     constructor(width, height, initial) {
         this.width = width;
         this.height = height;
@@ -36,7 +36,7 @@ export class Grid {
     }
 }
 
-export class Tile {
+class Tile {
     constructor(x, y, passable) {
         this.x = x;
         this.y = y;

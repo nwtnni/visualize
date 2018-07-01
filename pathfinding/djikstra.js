@@ -1,8 +1,4 @@
-import { Tile } from './grid.js';
-import { Heap } from './heap.js';
-import { parse } from './parse.js';
-
-export class DjikstraTile extends Tile {
+class DjikstraTile extends Tile {
     get d() {
         return this.d;
     }
@@ -12,7 +8,7 @@ export class DjikstraTile extends Tile {
     }
 }
 
-export function djikstra(grid, start, end, passable) {
+function djikstra(grid, start, end, passable) {
 
     grid.forEach(tile => tile.d = Infinity);
     var visited = new Set([]);

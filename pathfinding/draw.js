@@ -4,7 +4,7 @@ import { TINY } from './parse.js';
 
 const SEARCH = bfs(TINY, new Point(0, 0), new Point(4, 4), tile => tile.passable);
 const DATA = TINY.data;
-let visited = new Set([]);
+let VISITED = SEARCH.next().value;
 
 const HEIGHT = 500;
 const WIDTH = 500;
@@ -27,8 +27,8 @@ const rows = grid.selectAll(".row")
 
 d3.interval(() => {
     const next = SEARCH.next().value;
-    visited = next ? next : visited;
-    update(DATA, visited);
+    VISITED = next ? next : VISITED;
+    update(DATA, VISITED);
 }, 1000);
 
 function update(data, visited) {
@@ -51,7 +51,7 @@ function update(data, visited) {
             if (visited.contains(new Point(tile.x, tile.y))) {
                 return d3.rgb(255, 0, 0, 0.5);
             } else {
-                return d3.rgb(0, 0, 0, 0);
+                return d3.rgb(255, 255, 255, 1);
             }
         });
 }

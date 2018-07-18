@@ -1,7 +1,8 @@
 export class HashMap {
 
     constructor() {
-        this.buckets = [];
+        this.buckets = new Array(10).fill(undefined);
+        console.log(this.buckets);
         this.size = 0;
         this.capacity = 10;
     }

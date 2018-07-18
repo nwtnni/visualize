@@ -6,6 +6,7 @@ export function* bfs(grid, start, end, passable) {
     let frontier = [start];
     let visited = new HashSet();
     let retrace = new HashMap();
+    yield visited;
 
     while (frontier.length !== 0) {
         const p = frontier.pop();
